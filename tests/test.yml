@@ -8,7 +8,7 @@
     ansible_python_interpreter: /usr/bin/python3
 
     # Infer system NTP from a lookup of ntp config tested on OSX and Ubuntu.
-    ntp_install_ntp_servers: [ "{{ lookup('pipe','grep ntp /etc/ntp.conf | grep -E \"server|pool\" -m 1 | cut -d\" \" -f2') }}" ]
+    ntp_install_ntp_servers: [ "{{ lookup('pipe','grep -s ntp /etc/ntp.conf | grep -E \"server|pool\" -m 1 | cut -d\" \" -f2') or '127.0.0.1' }}" ]
 
     # Proxy
     proxy_env:

@@ -11,7 +11,9 @@
 
 - name: run_ntpdate
   command: "ntpdate {{ ntp_install_ntp_servers | first }}"
-  when: ntp_install_force_update == true
+  when:
+    - ntp_install_force_update == true
+    - ntp_install_ntp_servers|first != "127.0.0.1"
 
 - name: restart_ntp
   service:
