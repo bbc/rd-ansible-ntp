@@ -1,0 +1,22 @@
+---
+# name: rd-ansible-ntp/defaults
+# description: ALL our default variables for rd-ansible-ntp go in here
+# ------------------------------------------------------------------------------
+# Packages - All our required packages we need installing
+# ------------------------------------------------------------------------------
+
+# - pre-requisites -
+packages:                                         # Packages required for NTP and NTP Forced updates
+    - ntp
+    - ntpdate
+
+# - variables -
+ntp_install_ntp_servers:                          # NTP Servers
+    - 0.uk.pool.ntp.org
+    - 1.uk.pool.ntp.org
+    - 2.uk.pool.ntp.org
+    - 3.uk.pool.ntp.org
+
+ntp_install_drift_path: /var/lib/ntp/ntp.drift    # Location of drift file
+ntp_install_force_update: true                    # Force an ntpdate if the configuration changes
+ntp_install_timezone: /usr/share/zoneinfo/UTC     # What timezone do we want as default

@@ -1,0 +1,25 @@
+### MANAGED BY {{ role_path|basename }} ANSIBLE ROLE ###
+
+# Set up drift path
+driftfile {{ ntp_install_drift_path }}
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+# Specify one or more NTP servers.
+{% for ntp_servers in ntp_install_ntp_servers %}
+pool {{ ntp_servers }} iburst
+{% endfor %}
+
+# By default, exchange time with everybody, but don't allow configuration.
+restrict -4 default kod notrap nomodify nopeer noquery limited
+restrict -6 default kod notrap nomodify nopeer noquery limited
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1
+restrict ::1
+
+# Needed for adding pool entries
+restrict source notrap nomodify noquery

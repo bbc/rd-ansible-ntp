@@ -1,0 +1,19 @@
+---
+# module: rd-ansible-ntp/tasks/configure
+# description: Configure rd-ansible-ntp
+
+- name: Create a configuration for NTP in /etc/ntp.conf
+  template:
+    src: ntp.conf.j2
+    dest: "/etc/ntp.conf"
+  notify:
+    - force_update
+    - restart_ntp
+
+- name: Set timezone
+  file:
+    src: "{{ ntp_install_timezone }}"
+    dest: /etc/localtime
+    follow: no
+    force: yes
+    state: link

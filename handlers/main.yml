@@ -1,0 +1,19 @@
+---
+# name: rd-ansible-ntp/handlers
+# description: All our handlers for rd-ansible-ntp go in here
+
+- name: force_update
+  service:
+    name: ntp
+    state: stopped
+  notify: run_ntpdate
+  when: ntp_install_force_update == true
+
+- name: run_ntpdate
+  command: "ntpdate {{ ntp_install_ntp_servers | first }}"
+  when: ntp_install_force_update == true
+
+- name: restart_ntp
+  service:
+    name: ntp
+    state: restarted

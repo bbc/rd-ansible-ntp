@@ -1,0 +1,14 @@
+---
+# module: rd-ansible-ntp/tasks/install
+# description: Install our required packages for rd-ansible-ntp
+
+- name: Install all required packages for ntp_install
+  apt:
+    pkg: "{{ packages }}"
+    state: present
+
+- name: Enable and start ntp
+  service:
+    name: ntp
+    state: started
+    enabled: yes

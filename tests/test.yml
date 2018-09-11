@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: true
+  become_method: sudo
+  vars:
+    # Use Python 3 instead of 2
+    ansible_python_interpreter: /usr/bin/python3
+
+    # Infer system NTP from a lookup of ntp config tested on OSX and Ubuntu.
+    ntp_install_ntp_servers: [ "{{ lookup('pipe','grep ntp /etc/ntp.conf | grep -E \"server|pool\" -m 1 | cut -d\" \" -f2') }}" ]
+
+    # Proxy
+    proxy_env:
+      http_proxy: "{{ lookup('env','http_proxy') }}"
+      https_proxy: "{{ lookup('env','https_proxy') }}"
+      rsync_proxy: "{{ lookup('env','rsync_proxy') }}"
+
+  pre_tasks:
+    - debug:
+        msg: "NTP Variable: {{ ntp_install_ntp_servers | first }}"
+  roles:
+    - role: "{{ playbook_dir | dirname }}"
+  environment: "{{ proxy_env }}"
