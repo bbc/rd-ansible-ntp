@@ -20,3 +20,7 @@ ntp_install_ntp_servers:                          # NTP Servers
 ntp_install_drift_path: /var/lib/ntp/ntp.drift    # Location of drift file
 ntp_install_force_update: true                    # Force an ntpdate if the configuration changes
 ntp_install_timezone: /usr/share/zoneinfo/UTC     # What timezone do we want as default
+
+# A list of all interfaces on which ntp will listen. Defaults to all (as when not set explicitly).
+ntp_listen_interfaces:
+  - 0.0.0.0

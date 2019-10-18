@@ -23,3 +23,10 @@ restrict ::1
 
 # Needed for adding pool entries
 restrict source notrap nomodify noquery
+
+# Specify listening interfaces
+interface ignore wildcard
+interface ignore ipv6
+{% for ntp_interface in ntp_listen_interfaces %}
+interface listen {{ ntp_interface | ipaddr('network') }}
+{% endfor %}
