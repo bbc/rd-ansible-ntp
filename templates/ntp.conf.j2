@@ -28,5 +28,5 @@ restrict source notrap nomodify noquery
 interface ignore wildcard
 interface ignore ipv6
 {% for ntp_interface in ntp_listen_interfaces %}
-interface listen {{ ntp_interface | ipaddr('network') }}
+interface listen {{ ntp_interface | ipaddr('address') }}
 {% endfor %}
