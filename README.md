@@ -23,7 +23,6 @@ Example to call:
         ntp_install_ntp_servers:
           - ntp0.server.org
           - ntp1.server.org
-        ntp_install_timezone: /usr/share/zoneinfo/UTC
 
       roles:
          - { role: rd-ansible-ntp }
